@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "name": "Block YouTube Auto Pause",
+  "version": "1.0",
+  "description": "Blocks the automatic pausing of YouTube videos and music after a certain amount of time.",
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "https://www.youtube.com/*",
+    "https://music.youtube.com/*"
+  ],
+  "background": {
+    "scripts": [
+      "blockAutoPause.js"
+    ]
+  }
+}
