@@ -3,6 +3,10 @@
     "name": "Block YouTube Auto Pause",
     "version": "0.1.0",
     "description": "Blocks the automatic pausing of YouTube videos and music after a certain amount of time.",
+    "icons": {
+        "32": "icons/32.png",
+        "64": "icons/64.png"
+    },
     "permissions": [
         "webRequest",
         "webRequestBlocking",
