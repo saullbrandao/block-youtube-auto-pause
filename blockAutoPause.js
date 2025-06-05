@@ -1,24 +1,22 @@
-try {
-  //Intercept youtube requests
-  browser.webRequest.onBeforeRequest.addListener(
+browser.webRequest.onBeforeRequest.addListener(
     function (details) {
-      //Get last active time from the url
-      var lastActiveTime = details.url.match(/lact=([^&#]*)/)
+        try {
+            const url = new URL(details.url)
 
-      if (lastActiveTime && lastActiveTime[1] && lastActiveTime[1] != '0') {
-        //Change the last active time to 0 in the intercepted requests
-        var activeURL = details.url.slice(0, lastActiveTime.index + 5) + '0' + details.url.slice(lastActiveTime.index + 5 + lastActiveTime[1].length)
+            if (!url.searchParams.has('lact') || url.searchParams.get('lact') === '0') {
+                return;
+            }
 
-        //Redirect requests with new lastActiveTime
-        return { redirectUrl: activeURL };
-      }
+            url.searchParams.set('lact', 0)
+            return { redirectUrl: url.toString() }
+        }
+        catch (e) {
+            console.log("Error processing YouTube request:", e.message)
+            throw (e)
+        }
     },
-    { urls: ["https://www.youtube.com/*", "https://music.youtube.com/*"], types: ["main_frame", "sub_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"] },
+    { urls: ['https://www.youtube.com/*', 'https://music.youtube.com/*'], types: ['xmlhttprequest'] },
     ['blocking']
-  );
-}
+);
 
-catch (e) {
-  console.log("Error! Please contact the developer.")
-  throw (e)
-}
+
